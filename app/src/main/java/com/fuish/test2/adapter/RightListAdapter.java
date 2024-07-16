@@ -53,6 +53,11 @@ public class RightListAdapter extends RecyclerView.Adapter<RightListAdapter.MyHo
     public int getItemCount() {
         return mProductInfos.size();
     }
+    private RightListOnClickItemListener mRightListOnClickItemListener;
+    public void setOnItemClickListener(RightListAdapter OnClickItemListener) {
+        mRightListOnClickItemListener=OnClickItemListener;
+
+    }
 
     static class MyHolder extends RecyclerView.ViewHolder{
         ImageView product_img;
@@ -67,5 +72,8 @@ public class RightListAdapter extends RecyclerView.Adapter<RightListAdapter.MyHo
             product_price=itemView.findViewById(R.id.product_price);
 
         }
+    }
+
+    public class RightListOnClickItemListener {
     }
 }

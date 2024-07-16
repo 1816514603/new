@@ -57,6 +57,10 @@ private List<String> leftDataList=new ArrayList<>();
         rightRecyclerView.setAdapter(mRightListAdapter);
         //默认加载食品数据
         mRightListAdapter.setListData(DataService.getListData(0));
+
+        mRightListAdapter.setOnItemClickListener(new RightListAdapter.OnClickItemListener);
+
+
         //recyclerView点击事件
         mLeftListAdapter.setLeftListOnClickItemListener(new LeftListAdapter.LeftListOnClickItemListener() {
             @Override
