@@ -11,9 +11,12 @@ import androidx.annotation.Nullable;
 
 import com.fuish.test2.entity.CarInfo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CarDbHelper extends SQLiteOpenHelper {
     private static CarDbHelper sHelper;
-    private static final String DB_NAME = "user_info.db";   //数据库名
+    private static final String DB_NAME = "Car_info.db";   //数据库名
     private static final int VERSION = 1;    //版本号
 
     //必须实现其中一个构方法
@@ -33,11 +36,11 @@ public class CarDbHelper extends SQLiteOpenHelper {
         //创建Car_table表
         db.execSQL("create table Car_table(_id integer primary key autoincrement, " +
                 "username text," +       //用户名
-                "product_id text," +
+                "product_id integer," +
                 "product_img integer," +
                 "product_title text," +
                 "product_price integer," +
-                "Product_count integer" +
+                "product_count integer" +
                 ")");
 
 
@@ -65,7 +68,7 @@ public class CarDbHelper extends SQLiteOpenHelper {
             values.put("product_img", product_img);
             values.put("product_title", product_title);
             values.put("product_price", product_price);
-            values.put("Product_count", 1);
+            values.put("product_count", 1);
             String nullColumnHack = "values(null,?,?,?,?,?,?)";
             //执行
             int insert = (int) db.insert("Car_table", nullColumnHack, values);
@@ -101,23 +104,58 @@ public CarInfo isAddCar(String username,int product_id) {
     //获取SQLiteDatabase实例
     SQLiteDatabase db = getReadableDatabase();
     CarInfo carInfo = null;
-    String sql = "select _id,username,product_id,product_img,product_title,product_price,product_count from Car_table where username=? And product_id=?";
-    String[] selectionArgs = {username,product_id+""};
+    String sql = "SELECT _id, username, product_id, product_img, product_title, product_price, product_count FROM Car_table WHERE username=? AND product_id=?";
+    String[] selectionArgs = {username,String.valueOf(product_id)};
     Cursor cursor = db.rawQuery(sql, selectionArgs);
-    if (cursor.moveToNext()) {
-        int _id = cursor.getInt(cursor.getColumnIndex("_id"));
-        String name = cursor.getString(cursor.getColumnIndex("username"));
-        int Product_id = cursor.getInt(cursor.getColumnIndex("product_id"));
-        int Product_img = cursor.getInt(cursor.getColumnIndex("product_img"));
-        String Product_title = cursor.getString(cursor.getColumnIndex("product_title"));
-        String product_price = cursor.getString(cursor.getColumnIndex("product_price"));
-        int Product_count = cursor.getInt(cursor.getColumnIndex("product_count"));
+    try {
+        if (cursor.moveToNext()) {
+            int car_id = cursor.getInt(cursor.getColumnIndex("_id"));
+            String name = cursor.getString(cursor.getColumnIndex("username"));
+            int Product_id = cursor.getInt(cursor.getColumnIndex("product_id"));
+            int Product_img = cursor.getInt(cursor.getColumnIndex("product_img"));
+            String Product_title = cursor.getString(cursor.getColumnIndex("product_title"));
+            String Product_price = cursor.getString(cursor.getColumnIndex("product_price"));
+            int Product_count = cursor.getInt(cursor.getColumnIndex("product_count"));
 
-        carInfo = new CarInfo(_id, name, Product_id, Product_img,Product_title,product_price,Product_count);
+            carInfo = new CarInfo(car_id, name, Product_id, Product_img, Product_title, Product_price, Product_count);
+        }
+    }finally {
+        // 确保Cursor和Database都被关闭，即使在发生异常时也是如此
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        if (db.isOpen()) {
+            db.close();
+        }
     }
-    cursor.close();
-    db.close();
     return carInfo;
 }
+
+    /**
+     * 根据用户名查询购物车
+     * @return
+     */
+    @SuppressLint("Range")
+    public List<CarInfo> queryCarList(String username) {
+        //获取SQLiteDatabase实例
+        SQLiteDatabase db = getReadableDatabase();
+        List<CarInfo> list = new ArrayList<>();
+        String sql = "SELECT _id, username, product_id, product_img, product_title, product_price, product_count FROM Car_table WHERE username=? ";
+        String[] selectionArgs = {username};
+        Cursor cursor = db.rawQuery(sql, selectionArgs);
+        while (cursor.moveToNext()) {
+            int car_id = cursor.getInt(cursor.getColumnIndex("_id"));
+            String name = cursor.getString(cursor.getColumnIndex("username"));
+            int Product_id = cursor.getInt(cursor.getColumnIndex("product_id"));
+            int Product_img = cursor.getInt(cursor.getColumnIndex("product_img"));
+            String Product_title = cursor.getString(cursor.getColumnIndex("product_title"));
+            String Product_price = cursor.getString(cursor.getColumnIndex("product_price"));
+            int Product_count = cursor.getInt(cursor.getColumnIndex("product_count"));
+            list.add(new CarInfo(car_id, name, Product_id, Product_img, Product_title, Product_price, Product_count));
+        }
+        cursor.close();
+        db.close();
+        return list;
+    }
 
 }

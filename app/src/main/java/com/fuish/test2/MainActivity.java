@@ -66,23 +66,29 @@ public class MainActivity extends AppCompatActivity {
                     fragmentTransaction.add(R.id.content, mOrderFragment);
                 }else {
                     fragmentTransaction.show(mOrderFragment);
+
                 }
             } else if (position==2) {
                 if (mCarFragment==null){
                     mCarFragment=new CarFragment();
                     fragmentTransaction.add(R.id.content,mCarFragment);
                 }
-                else {
+                else {fragmentTransaction.show(mCarFragment);
+                    mCarFragment.loadData();
+                }
+            }
+                else if(position==3){
                     if (mMineFragment==null){
                         mMineFragment=new MineFragment();
                         fragmentTransaction.add(R.id.content,mMineFragment);
                     }
                     else{
                         fragmentTransaction.show(mMineFragment);
+
                     }
                 }
 
-        }
+
 
             fragmentTransaction.commit();
 
