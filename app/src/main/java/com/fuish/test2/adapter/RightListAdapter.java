@@ -1,5 +1,7 @@
 package com.fuish.test2.adapter;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,22 +39,39 @@ public class RightListAdapter extends RecyclerView.Adapter<RightListAdapter.MyHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+
+    public void onBindViewHolder(@NonNull MyHolder holder, @SuppressLint("RecyclerView") int position) {
         //绑定数据
         ProductInfo productInfo = mProductInfos.get(position);
 
-        holder.product_img.setImageResource(productInfo.getProduct_img());
-        holder.product_title.setText(productInfo.getProduct_title());
-        holder.product_details.setText(productInfo.getProduct_details());
+        if (productInfo != null) {
+            holder.product_img.setImageResource(productInfo.getProduct_img());
+            holder.product_title.setText(productInfo.getProduct_title());
+            holder.product_details.setText(productInfo.getProduct_details());
+            holder.product_price.setText(productInfo.getProduct_price());
 
-        //只能设置String类型
-        holder.product_price.setText(productInfo.getProduct_price()+"");
+            // 点击事件
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mOnClickItemListener != null) {
+                        mOnClickItemListener.OnItemClick(productInfo, position);
+                    }
+                    Log.d("productInfo1", "Clicked item with title: " + productInfo.getProduct_title());
+                }
+            });
+        } else {
+            Log.e("RightListAdapter", "productInfo is null at position: " + position);
+        }
     }
+
 
     @Override
     public int getItemCount() {
         return mProductInfos.size();
     }
+
+
 
     static class MyHolder extends RecyclerView.ViewHolder{
         ImageView product_img;
@@ -68,4 +87,13 @@ public class RightListAdapter extends RecyclerView.Adapter<RightListAdapter.MyHo
 
         }
     }
+    private  OnClickItemListener mOnClickItemListener;
+    public void setOnItemClickListener(OnClickItemListener onClickItemListener) {
+        mOnClickItemListener=onClickItemListener;
+
+    }
+    public  interface OnClickItemListener{
+        void OnItemClick(ProductInfo productInfo ,int position);
+}
+
 }

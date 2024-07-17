@@ -1,13 +1,16 @@
 package com.fuish.test2.entity;
 
-public class ProductInfo {
+import java.io.Serializable;
+
+public class ProductInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int product_id;
     private int product_img;
     private String product_title;
     private String product_details;
-    private int product_price;
+    private String product_price;
 
-    public ProductInfo(int product_id, int product_img, String product_title, int product_price) {
+    public ProductInfo(int product_id, int product_img, String product_title, String product_details ,String product_price) {
         this.product_id = product_id;
         this.product_img = product_img;
         this.product_title = product_title;
@@ -25,7 +28,7 @@ public class ProductInfo {
         this.product_id = product_id;
     }
 
-    public int getProduct_img() {
+    public  int getProduct_img() {
         return product_img;
     }
 
@@ -33,7 +36,7 @@ public class ProductInfo {
         this.product_img = product_img;
     }
 
-    public String getProduct_title() {
+    public  String getProduct_title() {
         return product_title;
     }
 
@@ -49,11 +52,11 @@ public class ProductInfo {
         this.product_details = product_details;
     }
 
-    public int getProduct_price() {
+    public String getProduct_price() {
         return product_price;
     }
 
-    public void setProduct_price(int product_price) {
+    public void setProduct_price(String product_price) {
         this.product_price = product_price;
     }
 }

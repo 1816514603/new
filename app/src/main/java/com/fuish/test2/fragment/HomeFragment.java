@@ -1,20 +1,24 @@
 package com.fuish.test2.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.fuish.test2.ProductDetailsActivity;
 import com.fuish.test2.R;
 import com.fuish.test2.adapter.LeftListAdapter;
 import com.fuish.test2.adapter.RightListAdapter;
 import com.fuish.test2.entity.DataService;
+import com.fuish.test2.entity.ProductInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +61,20 @@ private List<String> leftDataList=new ArrayList<>();
         rightRecyclerView.setAdapter(mRightListAdapter);
         //默认加载食品数据
         mRightListAdapter.setListData(DataService.getListData(0));
+
+
+        mRightListAdapter.setOnItemClickListener(new RightListAdapter.OnClickItemListener() {
+            @Override
+            public void OnItemClick(ProductInfo productInfo, int position) {
+                Log.d("HomeFragment","111"+productInfo.getProduct_title());
+            //跳转传值
+                Intent intent=new Intent(getActivity(), ProductDetailsActivity.class);
+                //传递对象的时候，实体类一定要implements Serializable
+                intent.putExtra("productInfo",productInfo);
+                startActivity(intent);
+            }
+        });
+
         //recyclerView点击事件
         mLeftListAdapter.setLeftListOnClickItemListener(new LeftListAdapter.LeftListOnClickItemListener() {
             @Override
