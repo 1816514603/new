@@ -61,20 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 fragmentTransaction.show(mHomeFragment);
             }}
             else if (position == 1) {
-                if (mOrderFragment == null) {
-                    mOrderFragment = new orderFragment();
-                    fragmentTransaction.add(R.id.content, mOrderFragment);
+                if (mCarFragment == null) {
+                    mCarFragment = new CarFragment();
+                    fragmentTransaction.add(R.id.content, mCarFragment);
                 }else {
-                    fragmentTransaction.show(mOrderFragment);
-
+                    fragmentTransaction.show(mCarFragment);
+                    mCarFragment.loadData();
                 }
             } else if (position==2) {
-                if (mCarFragment==null){
-                    mCarFragment=new CarFragment();
-                    fragmentTransaction.add(R.id.content,mCarFragment);
+                if (mOrderFragment==null){
+                    mOrderFragment=new orderFragment();
+                    fragmentTransaction.add(R.id.content,mOrderFragment);
                 }
-                else {fragmentTransaction.show(mCarFragment);
-                    mCarFragment.loadData();
+                else {fragmentTransaction.show(mOrderFragment);
                 }
             }
                 else if(position==3){

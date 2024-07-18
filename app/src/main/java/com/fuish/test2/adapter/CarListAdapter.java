@@ -21,6 +21,9 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyHolder
         this.mCarInfoList=list;
         notifyDataSetChanged();
     }
+//    public void setData(List<CarInfo> list) {
+//        this.mCarInfoList = list;
+//    }
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -37,12 +40,13 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyHolder
         holder.product_img.setImageResource(carInfo.getProduct_img());
         holder.product_title.setText(carInfo.getProduct_title());
         holder.product_price.setText(carInfo.getProduct_price());
-        holder.product_count.setText(carInfo.getProduct_count());
+//        holder.product_count.setText(carInfo.getProduct_count());
+        holder.product_count.setText(String.valueOf(carInfo.getProduct_count()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mCarInfoList.size();
     }
 
     static class MyHolder extends RecyclerView.ViewHolder{

@@ -67,7 +67,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //加入到购物车
                 int row = CarDbHelper.getInstance(ProductDetailsActivity.this).addCar("123", productInfo.getProduct_id(), productInfo.getProduct_img(), productInfo.getProduct_title(), productInfo.getProduct_price());
-            if (row>0){
+            Log.d("ProductDetailsActivity",productInfo.getProduct_title());
+                if (row>0){
                 Toast.makeText(ProductDetailsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(ProductDetailsActivity.this, "添加失败", Toast.LENGTH_SHORT).show();

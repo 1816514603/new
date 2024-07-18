@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class CarFragment extends Fragment {
 private  View rootView;
 private RecyclerView recyclerView;
 private CarListAdapter mCarListAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,15 +43,18 @@ private CarListAdapter mCarListAdapter;
         mCarListAdapter=new CarListAdapter();
         //设置适配器
         recyclerView.setAdapter(mCarListAdapter);
-
         loadData();
+
     }
     public void  loadData(){
         //获取数据
-        CarDbHelper dbHelper = CarDbHelper.getInstance(getActivity());
-        List<CarInfo> carList = dbHelper.queryCarList("123");
-//        List<CarInfo> carList= CarDbHelper.getInstance(getActivity().queryCarList("123"));
+//        CarDbHelper dbHelper = CarDbHelper.getInstance(getActivity());
+//        List<CarInfo> carList = dbHelper.queryCarList("123");
+        List<CarInfo> carList = CarDbHelper.getInstance(getActivity()).queryCarList("123");
         //设置数据
+//        mCarListAdapter.setData(carList);
+        Log.d("CarFragment", "Loaded car list: " + carList.toString());
+//        mCarListAdapter.notifyDataSetChanged();
         mCarListAdapter.setCarInfoList(carList);
     }
 }

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -17,7 +18,7 @@ import java.util.List;
 public class CarDbHelper extends SQLiteOpenHelper {
     private static CarDbHelper sHelper;
     private static final String DB_NAME = "Car_info.db";   //数据库名
-    private static final int VERSION = 1;    //版本号
+    private static final int VERSION = 2;    //版本号
 
     //必须实现其中一个构方法
     public CarDbHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
@@ -33,6 +34,7 @@ public class CarDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("CarDbHelper", "Creating Car_table");
         //创建Car_table表
         db.execSQL("create table Car_table(_id integer primary key autoincrement, " +
                 "username text," +       //用户名
@@ -48,14 +50,18 @@ public class CarDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        if (i < i1) {
+            Log.d("CarDbHelper1", "Upgrading database from version " + i + " to " + i1);
+            sqLiteDatabase.execSQL("DROP TABLE IF EXISTS Car_table");
+            onCreate(sqLiteDatabase);
+        }
     }
 
     /**
      *添加商品到购物车
      */
     public int addCar(String username, int product_id,  int product_img,String product_title,String product_price) {
-
+        Log.d("CarDbHelper2", "Adding car for user: " + username);
         //判断是否添加过商品，如果添加过,只修改商品数量即可
         CarInfo addCar = isAddCar(username, product_id);
         if (addCar == null) {
@@ -70,8 +76,10 @@ public class CarDbHelper extends SQLiteOpenHelper {
             values.put("product_price", product_price);
             values.put("product_count", 1);
             String nullColumnHack = "values(null,?,?,?,?,?,?)";
+
             //执行
             int insert = (int) db.insert("Car_table", nullColumnHack, values);
+            Log.d("CarDbHelper3", "Inserted car with ID: " + insert);
             db.close();
             return insert;
         }else {
@@ -125,7 +133,7 @@ public CarInfo isAddCar(String username,int product_id) {
             cursor.close();
         }
         if (db.isOpen()) {
-            db.close();
+//            db.close();
         }
     }
     return carInfo;
@@ -137,6 +145,7 @@ public CarInfo isAddCar(String username,int product_id) {
      */
     @SuppressLint("Range")
     public List<CarInfo> queryCarList(String username) {
+        Log.d("CarDbHelper5", "Querying car list for user: " + username);
         //获取SQLiteDatabase实例
         SQLiteDatabase db = getReadableDatabase();
         List<CarInfo> list = new ArrayList<>();
@@ -144,6 +153,7 @@ public CarInfo isAddCar(String username,int product_id) {
         String[] selectionArgs = {username};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         while (cursor.moveToNext()) {
+            Log.d("CarDbHelper6", "Retrieved car with ID: " + cursor.getInt(cursor.getColumnIndex("_id")));
             int car_id = cursor.getInt(cursor.getColumnIndex("_id"));
             String name = cursor.getString(cursor.getColumnIndex("username"));
             int Product_id = cursor.getInt(cursor.getColumnIndex("product_id"));
@@ -152,6 +162,7 @@ public CarInfo isAddCar(String username,int product_id) {
             String Product_price = cursor.getString(cursor.getColumnIndex("product_price"));
             int Product_count = cursor.getInt(cursor.getColumnIndex("product_count"));
             list.add(new CarInfo(car_id, name, Product_id, Product_img, Product_title, Product_price, Product_count));
+            Log.d("CarDbHelper7", "Retrieved car with ID: " + car_id);
         }
         cursor.close();
         db.close();
