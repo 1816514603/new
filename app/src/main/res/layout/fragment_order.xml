@@ -17,5 +17,12 @@
         android:background="@color/my_light_primary"
         app:title="订单"
         app:titleTextColor="@color/white"/>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/order_list_item"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

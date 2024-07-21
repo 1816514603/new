@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.fuish.test2.fragment.CarFragment;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("MainActivity", "onCreate called");
 
         //初始化控件
          mbottomNavigationView=findViewById(R.id.bottomNavigationView);

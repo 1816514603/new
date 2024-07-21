@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -62,6 +63,7 @@ public class UserDbHelper extends SQLiteOpenHelper {
             String password = cursor.getString(cursor.getColumnIndex("password"));
             String nickname = cursor.getString(cursor.getColumnIndex("nickname"));
             userInfo = new UserInfo(user_id, name, password, nickname);
+            Log.d("DB_LOGIN", "Fetched password: " + password); // 添加日志
         }
         cursor.close();
 //        db.close();
@@ -86,6 +88,22 @@ public class UserDbHelper extends SQLiteOpenHelper {
 //        db.close();
         return insert;
     }
+    /**
+     * 修改密码
+     */
+    public int updatePwd(String username, String password) {
+        //获取SQLiteDatabase实例
+        SQLiteDatabase db = getWritableDatabase();
+        // 填充占位符
+        ContentValues values = new ContentValues();
+        values.put("password", password);
+        // 执行SQL
+        int update = db.update("user_table", values, " username=?", new String[]{username+""});
+        Log.d("DB_UPDATE", "Updated rows: " + update); // 添加日志
+        // 关闭数据库连接
+//        db.close();
+        return update;
 
+    }
 
 }

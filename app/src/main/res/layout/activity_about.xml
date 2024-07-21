@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context=".AboutActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toobal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/baseline_arrow_back_24"
+        android:background="@color/my_light_primary"
+        app:title="关于APP"
+        app:titleTextColor="@color/white"/>
+    
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:src="@mipmap/app2"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="30dp"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bb 我们也是经历了很多很多了 一切的开始都是因为你 因为我爱你 因为你 我才会去南京 我们的故事才会开始 所以你不必说因为我才什么什么的，也有你的功劳，我们一起去看世界，一起认识自己，寻找自己 当然我作为你的男人承担多一些这也是应该的 谁让我这么爱你呢"
+        android:layout_margin="20dp"
+        android:lineSpacingExtra="5dp"
+        android:textStyle="bold"/>
+
+</LinearLayout>

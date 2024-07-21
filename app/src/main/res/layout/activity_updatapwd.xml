@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UpdatapwdActivity">
+
+    <Toolbar
+        android:id="@+id/toobal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/my_light_primary"
+        android:title="修改密码"
+        android:titleTextColor="@color/white"
+        android:navigationIcon="@drawable/baseline_arrow_back_24"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_height="wrap_content">
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:background="@drawable/login_et_bg"
+    android:layout_height="50dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/baseline_https_24"/>
+
+    <EditText
+        android:id="@+id/et_updata_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:hint="请输入新密码"
+        android:textSize="14sp"
+        android:paddingLeft="10dp"
+        />
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
+    android:background="@drawable/login_et_bg"
+    android:layout_height="50dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/baseline_https_24"/>
+
+    <EditText
+        android:id="@+id/et_comfirm_password"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:hint="请输入确认新密码"
+        android:textSize="14sp"
+        android:paddingLeft="10dp"
+        />
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+            <Button
+                android:id="@+id/btn_updata_pwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="修改密码"
+                android:layout_marginTop="30dp"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,38 +1,32 @@
 package com.fuish.test2.entity;
 
-public class CarInfo {
-    private int car_id;
+public class OrderInfo {
+    private int order_id;
     private String username;
-    private int product_id;
     private int product_img;
     private String product_title;
     private int product_price;
     private int Product_count;
+    private String addres;
+    private String mobile;
 
-    public CarInfo(int car_id, String username, int product_id, int product_img, String product_title, int product_price, int product_count) {
-        this.car_id = car_id;
+    public OrderInfo(int order_id, String username, int product_img, String product_title, int product_price, int product_count, String addres, String mobile) {
+        this.order_id = order_id;
         this.username = username;
-        this.product_id = product_id;
         this.product_img = product_img;
         this.product_title = product_title;
         this.product_price = product_price;
-        this.Product_count = product_count;
+        Product_count = product_count;
+        this.addres = addres;
+        this.mobile = mobile;
     }
 
-    public int getProduct_count() {
-        return Product_count;
+    public int getOrder_id() {
+        return order_id;
     }
 
-    public void setProduct_count(int product_count) {
-        this.Product_count = product_count;
-    }
-
-    public int getCar_id() {
-        return car_id;
-    }
-
-    public void setCar_id(int car_id) {
-        this.car_id = car_id;
+    public void setOrder_id(int order_id) {
+        this.order_id = order_id;
     }
 
     public String getUsername() {
@@ -41,14 +35,6 @@ public class CarInfo {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public int getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(int product_id) {
-        this.product_id = product_id;
     }
 
     public int getProduct_img() {
@@ -73,5 +59,29 @@ public class CarInfo {
 
     public void setProduct_price(int product_price) {
         this.product_price = product_price;
+    }
+
+    public int getProduct_count() {
+        return Product_count;
+    }
+
+    public void setProduct_count(int product_count) {
+        Product_count = product_count;
+    }
+
+    public String getAddres() {
+        return addres;
+    }
+
+    public void setAddres(String addres) {
+        this.addres = addres;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 }

@@ -80,7 +80,7 @@ public class CarDbHelper extends SQLiteOpenHelper {
             //执行
             int insert = (int) db.insert("Car_table", nullColumnHack, values);
             Log.d("CarDbHelper3", "Inserted car with ID: " + insert);
-            db.close();
+//            db.close();
             return insert;
         }else {
             return updateProduct(addCar.getCar_id(),addCar);
@@ -99,10 +99,30 @@ public class CarDbHelper extends SQLiteOpenHelper {
     // 执行SQL
     int update = db.update("Car_table", values, " _id=?", new String[]{car_id+""});
     // 关闭数据库连接
-    db.close();
+//    db.close();
     return update;
 
 }
+
+    /**
+     * 减购物车
+     */
+    public int subtractUpdateProduct(int car_id,CarInfo carInfo) {
+        //获取SQLiteDatabase实例
+        if (carInfo.getProduct_count()>=2) {
+            SQLiteDatabase db = getWritableDatabase();
+            // 填充占位符
+            ContentValues values = new ContentValues();
+            values.put("product_count", carInfo.getProduct_count() - 1);
+            // 执行SQL
+            int update = db.update("Car_table", values, " _id=?", new String[]{car_id + ""});
+            // 关闭数据库连接
+//            db.close();
+            return update;
+        }
+
+        return 0;
+    }
 
 /**
  * 根据用户名和商品ID判断有没有添加过商品
@@ -122,7 +142,7 @@ public CarInfo isAddCar(String username,int product_id) {
             int Product_id = cursor.getInt(cursor.getColumnIndex("product_id"));
             int Product_img = cursor.getInt(cursor.getColumnIndex("product_img"));
             String Product_title = cursor.getString(cursor.getColumnIndex("product_title"));
-            String Product_price = cursor.getString(cursor.getColumnIndex("product_price"));
+            int Product_price = cursor.getInt(cursor.getColumnIndex("product_price"));
             int Product_count = cursor.getInt(cursor.getColumnIndex("product_count"));
 
             carInfo = new CarInfo(car_id, name, Product_id, Product_img, Product_title, Product_price, Product_count);
@@ -159,14 +179,26 @@ public CarInfo isAddCar(String username,int product_id) {
             int Product_id = cursor.getInt(cursor.getColumnIndex("product_id"));
             int Product_img = cursor.getInt(cursor.getColumnIndex("product_img"));
             String Product_title = cursor.getString(cursor.getColumnIndex("product_title"));
-            String Product_price = cursor.getString(cursor.getColumnIndex("product_price"));
+            int Product_price = cursor.getInt(cursor.getColumnIndex("product_price"));
             int Product_count = cursor.getInt(cursor.getColumnIndex("product_count"));
             list.add(new CarInfo(car_id, name, Product_id, Product_img, Product_title, Product_price, Product_count));
             Log.d("CarDbHelper7", "Retrieved car with ID: " + car_id);
         }
         cursor.close();
-        db.close();
+//        db.close();
         return list;
+    }
+    /**
+     * 删除购物车商品
+     */
+    public int delete(String car_id) {
+        //获取SQLiteDatabase实例
+        SQLiteDatabase db = getWritableDatabase();
+        // 执行SQL
+        int delete = db.delete("Car_table", " _id=?", new String[]{car_id});
+        // 关闭数据库连接
+//        db.close();
+        return delete;
     }
 
 }

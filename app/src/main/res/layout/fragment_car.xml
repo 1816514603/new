@@ -60,15 +60,17 @@
         android:layout_gravity="bottom"
         android:src="@drawable/baseline_currency_yen_24"/>
     <TextView
+        android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="198.00"
+        android:text="00.00"
         android:textColor="#FF6D00"
         android:textSize="20sp"
         android:textStyle="bold"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
             
             <Button
+                android:id="@+id/btn_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="结算"

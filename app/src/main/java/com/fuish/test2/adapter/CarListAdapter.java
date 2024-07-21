@@ -1,5 +1,6 @@
 package com.fuish.test2.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.car_list_item, null);
         return new MyHolder(view);
     }
-
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
 
@@ -39,9 +40,36 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyHolder
         CarInfo carInfo=mCarInfoList.get(position);
         holder.product_img.setImageResource(carInfo.getProduct_img());
         holder.product_title.setText(carInfo.getProduct_title());
-        holder.product_price.setText(carInfo.getProduct_price());
+        holder.product_price.setText(String.valueOf(carInfo.getProduct_price()));
 //        holder.product_count.setText(carInfo.getProduct_count());
         holder.product_count.setText(String.valueOf(carInfo.getProduct_count()));
+
+
+        //设置点击事件
+        holder.btn_subtract.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null!=mOnItemClickListener){
+                    mOnItemClickListener.onSubTractOnClick(carInfo,position);
+                }
+            }
+        });
+        holder.btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null!=mOnItemClickListener){
+                    mOnItemClickListener.onPlusOnClick(carInfo,position);
+                }
+            }
+        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null!=mOnItemClickListener){
+                    mOnItemClickListener.delOnClick(carInfo,position);
+                }
+            }
+        });
     }
 
     @Override
@@ -54,12 +82,28 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.MyHolder
         TextView product_title;
         TextView product_price;
         TextView product_count;
+        TextView btn_subtract;
+        TextView btn_add;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             product_img=itemView.findViewById(R.id.product_img);
             product_title=itemView.findViewById(R.id.product_title);
             product_price=itemView.findViewById(R.id.product_price);
             product_count=itemView.findViewById(R.id.product_count);
+            btn_subtract=itemView.findViewById(R.id.btn_subtract);
+            btn_add=itemView.findViewById(R.id.btn_add);
         }
+    }
+    private onItemClickListener mOnItemClickListener;
+
+
+    public void setmOnItemClickListener(onItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
+
+    public interface onItemClickListener{
+        void onPlusOnClick(CarInfo carInfo,int position);
+        void onSubTractOnClick(CarInfo carInfo,int position);
+        void delOnClick(CarInfo carInfo,int position);
     }
 }

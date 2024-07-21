@@ -1,5 +1,7 @@
 package com.fuish.test2;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.fuish.test2.db.CarDbHelper;
 import com.fuish.test2.entity.ProductInfo;
+import com.fuish.test2.entity.UserInfo;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 
@@ -65,14 +68,32 @@ public class ProductDetailsActivity extends AppCompatActivity {
         findViewById(R.id.addCar).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //加入到购物车
-                int row = CarDbHelper.getInstance(ProductDetailsActivity.this).addCar("123", productInfo.getProduct_id(), productInfo.getProduct_img(), productInfo.getProduct_title(), productInfo.getProduct_price());
-            Log.d("ProductDetailsActivity",productInfo.getProduct_title());
-                if (row>0){
-                Toast.makeText(ProductDetailsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(ProductDetailsActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
-            }
+                new AlertDialog.Builder(ProductDetailsActivity.this)
+                        .setTitle("确认加入到购物车？")
+                        .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //加入到购物车
+                                UserInfo userInfo = UserInfo.getsUserInfo();
+                                if (userInfo != null) {
+                                    int row = CarDbHelper.getInstance(ProductDetailsActivity.this).addCar(userInfo.getUsername(), productInfo.getProduct_id(), productInfo.getProduct_img(), productInfo.getProduct_title(), productInfo.getProduct_price());
+                                    Log.d("ProductDetailsActivity", productInfo.getProduct_title());
+                                    if (row > 0) {
+                                        Toast.makeText(ProductDetailsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    } else {
+                                        Toast.makeText(ProductDetailsActivity.this, "添加失败", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
+                        })
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }).show();
+
             }
         });
 
